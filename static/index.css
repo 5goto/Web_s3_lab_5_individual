@@ -1,0 +1,20 @@
+
+html, body {
+    height: 100vh;
+    background-color: #cccccc;
+}
+
+body {
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.container {
+    min-height: 500px;
+    background-color: #ffff;
+    border-radius: 25px;
+    padding: 2em;
+    width: 40%;
+    margin: auto;
+}

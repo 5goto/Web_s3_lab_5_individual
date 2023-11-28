@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+      <link rel="stylesheet" href="{{ url_for('static', filename = 'index.css')}}">
+    <title>Калькулятор</title>
+  </head>
+  <body>
+    <div class="container">
+      <form action="{{ url_for('index') }}" method="get">
+        <h2>Выберите представление:</h2>
+        <select name="form">
+          <option value="alg">Алгебраическая</option>
+          <option value="exp">Показательная</option>
+        </select>
+        <input type="submit" value="Показать" />
+      </form>
+
+      {% if not form or form == 'alg' %}
+      <h3>Алгебраическая форма</h3>
+      <form action="{{ url_for('index') }}" method="post">
+        <p>
+          <p>Ваше число: <input type="text" name="base" placeholder="base" value={{ base }}>
+          + <input type="text" placeholder="imagine" name="imagine" value={{ img }}>i</p>
+
+          <fieldset>
+            <legend>Вычислить:</legend>
+          <div>
+            <input type="checkbox" id="representation" name="operation[]" value='0' {{ 'checked' if '0' in operations }} />
+            <label for="representation">Представление в остальных формах</label>
+          </div>
+          <div>
+            <input type="checkbox" id="image_part" name="operation[]" value='1' {{ 'checked' if '1' in operations }}/>
+            <label for="image_part">Мнимую часть числа</label>
+          </div>
+              <div>
+            <input type="checkbox" id="arg" name="operation[]" value='2' {{ 'checked' if '2' in operations }}/>
+            <label for="arg">Аргумент числа</label>
+          </div>
+        </fieldset>
+
+          <input id="form-submit" type="submit" value="Отправить" />
+          <input id="reset-btn" type="reset" value="Очистить" />
+        </p>
+      </form >
+      {% else %}
+      <h3>Показательная форма</h3>
+      <form action="{{ url_for('index') }}" method="post">
+        <p>
+          <p>Ваше число вида r * (cos(θ) + i * sin(θ)):</p>
+          <input type="text" name="r" placeholder="r" value={{ r }}>
+          <input type="text" placeholder="θ" name="imagine" value={{ img }}>
+            <fieldset>
+            <legend>Вычислить:</legend>
+          <div>
+            <input type="checkbox" id="representation" name="operation[]" value='0' {{ 'checked' if '0' in operations }}/>
+            <label for="representation">Представление в остальных формах</label>
+          </div>
+          <div>
+            <input type="checkbox" id="image_part" name="operation[]" value='1' {{ 'checked' if '1' in operations }}/>
+            <label for="image_part">Мнимую часть числа</label>
+          </div>
+              <div>
+            <input type="checkbox" id="arg" name="operation[]" value='2' {{ 'checked' if '2' in operations }}/>
+            <label for="arg">Аргумент числа</label>
+          </div>
+        </fieldset>
+          <input id="form-submit" type="submit" value="Отправить" />
+          <input id="reset-btn" type="reset" value="Очистить" />
+        </p>
+      </form>
+      {% endif %}
+        {% if result %}
+            <h3>Результат:</h3>
+            <hr>
+            {% if alg_result %}
+                <p>Представление в алгебраической форме: <b>{{ alg_result }}</b></p>
+            {% endif %}
+            {% if form_result %}
+                <p>Представление в экспоненциальной форме: <b>{{ form_result }}</b></p>
+            {% endif %}
+            {% if img_result %}
+                <p>Мнимая часть числа: <b>{{ img_result }}</b></p>
+            {% endif %}
+            {% if arg_result %}
+                <p>Аргумент числа: <b>{{ arg_result }}</b></p>
+            {% endif %}
+        {% endif %}
+    </div>
+  </body>
+</html>
